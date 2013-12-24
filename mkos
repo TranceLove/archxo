@@ -28,7 +28,7 @@ unpack_rootfs() {
         popd
 
         pushd $rootfs_dir
-        tar xfJ $work_dir/$file_name
+        tar xfvJ $work_dir/$file_name
         rm -rf boot lib/modules
         popd
     fi
@@ -40,7 +40,7 @@ build_kernel() {
     pushd $work_dir
 
     if [ ! -d olpc-kernel ]; then
-        git clone --depth=1 git://dev.laptop.org/olpc-kernel -b arm-3.0-wip
+        git clone --depth=1 git://dev.laptop.org/olpc-kernel -b arm-3.5
     fi
 
     cd olpc-kernel
@@ -51,7 +51,7 @@ build_kernel() {
     export CROSS_COMPILE=$target-
     export PATH=$PATH:$work_dir/x-tools7h/$target/bin
 
-    make xo_175_defconfig
+    make xo_4_defconfig
 
     local to_enable=(CONFIG_UTS_NS CONFIG_IPC_NS CONFIG_USER_NS CONFIG_PID_NS
                      CONFIG_NET_NS)
